@@ -1,65 +1,129 @@
 <!doctype html>
 <html lang="ru">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Быстрые правки: сайты, CI, интеграции — оплата USDT</title>
-  <link rel="stylesheet" href="styles.css" />
-  <meta name="description" content="Быстрые микрофиксы: правки сайтов/скриптов/CI, интеграции API, конвертация данных. Оплата USDT (ERC-20)." />
-</head>
-<body>
-  <header>
-    <h1>Быстрые правки: сайты, CI, интеграции</h1>
-    <p>Микрозадачи 1–3 часа. Оплата в USDT (ERC-20).</p>
-  </header>
-  <main>
-    <section>
-      <h2>Пакеты (фикс-прайс сегодня)</h2>
-      <ul class="cards">
-        <li>
-          <h3>$25 — Фикс фронтенда/верстки/JS</h3>
-          <p>Мелкий баг на сайте/лендинге/React. До ~2 часов.</p>
-        </li>
-        <li>
-          <h3>$30 — Починка GitHub Actions/CI</h3>
-          <p>Зелёный build, линтеры, кеши, версии Node/PNPM, matrix.</p>
-        </li>
-        <li>
-          <h3>$40 — Мини‑интеграция API/Webhook</h3>
-          <p>Подключение простого API/вебхука или правка существующего.</p>
-        </li>
-        <li>
-          <h3>$20 — Конвертация/очистка данных</h3>
-          <p>CSV/JSON/PDF→DOCX, сжатие изображений, субтитры.</p>
-        </li>
-      </ul>
-    </section>
-    <section>
-      <h2>Заказать исправление в 1 клик</h2>
-      <p>
-        <a class="btn" href="https://github.com/Ripasco/fast-fixes/issues/new?template=fix-request.md" target="_blank" rel="noopener">Открыть Issue с заявкой</a>
-      </p>
-    </section>
-    <section>
-      <h2>Как работаем</h2>
-      <ol>
-        <li>Описываете задачу (кратко) — создайте Issue в репозитории.</li>
-        <li>Получаете оценку/ок — начинаю сразу.</li>
-        <li>Оплата USDT → передаю результат.</li>
-      </ol>
-    </section>
-    <section>
-      <h2>Оплата (USDT, ERC‑20)</h2>
-      <p>Адрес: <code>0x963B0e222bf1e4f18c0efb108A4B7F111eFBdD13</code></p>
-      <p>Сеть: Ethereum (ERC‑20)</p>
-    </section>
-    <section>
-      <h2>Контакты</h2>
-      <p>Создайте Issue в репозитории или напишите в PR — так быстрее всего.</p>
-    </section>
-  </main>
-  <footer>
-    <p>© Быстрые правки · Сегодня</p>
-  </footer>
-</body>
-</html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Быстрые правки: сайты, CI, интеграции — USDT</title>
+    <meta name="description" content="Быстрые микрофиксы: правки сайтов/скриптов/CI, интеграции API, конвертация данных. Оплата USDT (ERC-20)." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              bg: '#0b1220',
+              card: '#0f172a',
+              stroke: '#1e293b',
+              fg: '#e2e8f0',
+              muted: '#94a3b8',
+              accent: '#22c55e',
+            }
+          }
+        }
+      }
+    </script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  </head>
+  <body class="bg-bg text-fg antialiased selection:bg-accent/20">
+    <div id="root"></div>
+    <script type="text/javascript">
+      const e = React.createElement;
+
+      const packages = [
+        { title: '$25 — Фикс фронтенда/верстки/JS', desc: 'Мелкий баг на сайте/лендинге/React. До ~2 часов.' },
+        { title: '$30 — Починка GitHub Actions/CI', desc: 'Зелёный build, линтеры, кеши, версии Node/PNPM, matrix.' },
+        { title: '$40 — Мини‑интеграция API/Webhook', desc: 'Подключение простого API/вебхука или правка существующего.' },
+        { title: '$20 — Конвертация/очистка данных', desc: 'CSV/JSON/PDF→DOCX, сжатие изображений, субтитры.' },
+      ];
+
+      function CopyAddr() {
+        const [copied, setCopied] = React.useState(false);
+        const addr = '0x963B0e222bf1e4f18c0efb108A4B7F111eFBdD13';
+        const onCopy = async () => {
+          try { await navigator.clipboard.writeText(addr); setCopied(true); setTimeout(()=>setCopied(false), 1500);} catch {}
+        };
+        return e('div', { className: 'flex flex-col sm:flex-row items-start sm:items-center gap-3' },
+          e('code', { className: 'px-2 py-1 rounded bg-slate-900 text-sm break-all' }, addr),
+          e('button', { onClick:onCopy, className: 'inline-flex items-center gap-2 px-3 py-2 rounded-md bg-accent text-slate-900 font-semibold hover:brightness-105 transition' },
+            e('span', null, copied ? 'Скопировано!' : 'Скопировать адрес')
+          )
+        );
+      }
+
+      function Card({title, desc}){
+        return e('div', { className: 'rounded-xl border border-stroke bg-card p-5 hover:border-accent/50 transition' },
+          e('h3', { className:'font-semibold text-lg mb-1'}, title),
+          e('p', { className:'text-muted'}, desc)
+        );
+      }
+
+      function App(){
+        return e(React.Fragment, null,
+          e('header', { className:'relative overflow-hidden' },
+            e('div', { className:'absolute inset-0 bg-gradient-to-br from-accent/10 via-indigo-500/5 to-fuchsia-500/5 blur-3xl' }),
+            e('nav', { className:'max-w-6xl mx-auto px-4 sm:px-6 py-5 flex items-center justify-between' },
+              e('div', { className:'flex items-center gap-2' },
+                e('div', { className:'w-2.5 h-2.5 rounded-full bg-accent' }),
+                e('span', { className:'font-semibold tracking-tight'}, 'Fast Fixes')
+              ),
+              e('a', { href:'https://github.com/Ripasco/fast-fixes', target:'_blank', rel:'noopener', className:'text-sm text-muted hover:text-fg' }, 'Репозиторий')
+            ),
+            e('div', { className:'max-w-6xl mx-auto px-4 sm:px-6 pt-6 pb-12 sm:pb-16' },
+              e('div', { className:'grid lg:grid-cols-2 gap-8 items-center' },
+                e('div', null,
+                  e('h1', { className:'text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight' }, 'Быстрые правки для сайтов, CI и интеграций'),
+                  e('p', { className:'mt-3 text-muted text-base sm:text-lg max-w-prose' }, 'Микрозадачи 1–3 часа. Фикс‑прайс. Оплата в USDT (ERC‑20).'),
+                  e('div', { className:'mt-6 flex flex-wrap gap-3' },
+                    e('a', { href:'https://github.com/Ripasco/fast-fixes/issues/new?template=fix-request.md', target:'_blank', rel:'noopener', className:'inline-flex items-center justify-center px-4 py-2 rounded-md bg-accent text-slate-900 font-semibold hover:brightness-105 transition' }, 'Открыть Issue'),
+                    e('a', { href:'https://ripasco.github.io/fast-fixes/', className:'inline-flex items-center justify-center px-4 py-2 rounded-md border border-stroke hover:border-accent/40 transition' }, 'Демо‑страница')
+                  )
+                ),
+                e('div', { className:'lg:justify-self-end' },
+                  e('div', { className:'rounded-2xl border border-stroke bg-card p-5 w-full max-w-md' },
+                    e('h3', { className:'font-semibold text-lg mb-2'}, 'Оплата (USDT, ERC‑20)'),
+                    e(CopyAddr, null),
+                    e('p', { className:'mt-3 text-muted text-sm'}, 'Сеть: Ethereum (ERC‑20)')
+                  )
+                )
+              )
+            )
+          ),
+          e('main', { className:'max-w-6xl mx-auto px-4 sm:px-6 py-10' },
+            e('section', null,
+              e('h2', { className:'text-xl sm:text-2xl font-semibold mb-4'}, 'Пакеты на сегодня'),
+              e('div', { className:'grid sm:grid-cols-2 lg:grid-cols-4 gap-4' }, packages.map((p,i)=> e(Card, { key:i, title:p.title, desc:p.desc })))
+            ),
+            e('section', { className:'mt-10 grid lg:grid-cols-2 gap-8' },
+              e('div', { className:'rounded-xl border border-stroke bg-card p-5' },
+                e('h2', { className:'text-lg font-semibold mb-2'}, 'Как работаем'),
+                e('ol', { className:'list-decimal list-inside text-muted space-y-1' },
+                  e('li', null, 'Создайте Issue и кратко опишите задачу'),
+                  e('li', null, 'Получаете оценку/ОК — начинаю сразу'),
+                  e('li', null, 'Оплата USDT → передаю результат')
+                )
+              ),
+              e('div', { className:'rounded-xl border border-stroke bg-card p-5' },
+                e('h2', { className:'text-lg font-semibold mb-2'}, 'Контакты'),
+                e('p', { className:'text-muted' }, 'Быстрее всего через Issue или комментарий к PR в репозитории.'),
+                e('div', { className:'mt-3 flex gap-3' },
+                  e('a', { href:'https://github.com/Ripasco/fast-fixes/issues/new?template=fix-request.md', target:'_blank', rel:'noopener', className:'inline-flex items-center justify-center px-4 py-2 rounded-md bg-accent text-slate-900 font-semibold hover:brightness-105 transition' }, 'Открыть Issue'),
+                  e('a', { href:'https://github.com/Ripasco/fast-fixes', target:'_blank', rel:'noopener', className:'inline-flex items-center justify-center px-4 py-2 rounded-md border border-stroke hover:border-accent/40 transition' }, 'Репозиторий')
+                )
+              )
+            )
+          ),
+          e('footer', { className:'border-t border-stroke mt-8' },
+            e('div', { className:'max-w-6xl mx-auto px-4 sm:px-6 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2' },
+              e('p', { className:'text-muted' }, '© Быстрые правки · Сегодня'),
+              e('p', { className:'text-muted' }, 'USDT (ERC‑20)')
+            )
+          )
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      root.render(e(App));
+    </script>
+  </body>
+  </html>
